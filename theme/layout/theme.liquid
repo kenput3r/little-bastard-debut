@@ -21,6 +21,7 @@
   <link rel="preload" as="font" href="{{ header_font | font_url }}" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="{{ base_font_bold | font_url }}" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/ubn0roj.css">
   <link rel="preload" href="{{ 'theme.js' | asset_url }}" as="script">
   <link rel="preload" href="{{ 'lazysizes.js' | asset_url }}" as="script">
 
@@ -83,6 +84,12 @@
     {{ base_font_bolder | font_face: font_display: 'swap' }}
     {{ base_font_italic | font_face: font_display: 'swap' }}
     {{ base_font_bold_italic | font_face: font_display: 'swap' }}
+  </style>
+
+  <style>
+    :root {
+          --font-stack-header: "dunbar-text", sans-serif;
+    }
   </style>
 
   <script>

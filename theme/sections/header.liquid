@@ -14,6 +14,31 @@
   </style>
 {% endif %}
 
+<style>
+  header.site-header {
+    background-color: #333232;
+    color: #F6F6F6 !important;
+  }
+  header.site-header svg {
+    color: #F6F6F6;
+  }
+  a.site-header__cart:focus svg, a.site-header__cart:not([disabled]):hover svg, .btn--link:focus svg, .btn--link:not([disabled]):hover svg, .site-header__icon:hover svg {
+    color: #8c8c8c;
+  }
+  .site-header__mobile-nav {
+    background-color: #333232;
+  }
+  .site-nav__link--main {
+    color: #F6F6F6;
+  }
+  .site-nav__link--main:hover {
+    color: #FFF !important;
+  }
+  .site-nav__link:focus .site-nav__label, .site-nav__link:not([disabled]):hover .site-nav__label {
+    border-bottom-color: #FFF;
+  }
+</style>
+
 {% include 'search-drawer' %}
 
 <div data-section-id="{{ section.id }}" data-section-type="header-section" data-header-section>
@@ -110,8 +135,18 @@
 
       <div class="grid__item {% if section.settings.align_logo == 'left' %}medium-up--one-quarter{% else %}medium-up--one-third medium-up--push-one-third{% endif %} text-right site-header__icons{% if shop.customer_accounts_enabled %} site-header__icons--plus{% endif %}">
         <div class="site-header__icons-wrapper">
+          {%- assign header_socials = "Facebook Instagram" | split: ' ' -%}
+          {%- for social in header_socials -%}
+            {%- assign header_socials_link = social | prepend: 'social_' | append: '_link' | downcase -%}
+            {%- assign header_socials_icon = social | prepend: 'icon-' | downcase -%}
+            {%- if settings[header_socials_link] != blank -%}
+              <a class="site-header__icon site-header__account" href="{{ settings[header_socials_link] | escape }}" aria-describedby="a11y-external-message" target="_blank" rel="noreferrer">
+                {%- include header_socials_icon -%}
+              </a>
+            {% endif %}
+          {%- endfor -%}
 
-          <button type="button" class="btn--link site-header__icon site-header__search-toggle js-drawer-open-top" data-predictive-search-open-drawer>
+          <button type="button" class="btn--link site-header__icon site-header__search-toggle js-drawer-open-top{% unless section.settings.show_search %} visually-hidden{% endunless %}" data-predictive-search-open-drawer>
             {% include 'icon-search' %}
             <span class="icon__fallback-text">{{ 'layout.navigation.search' | t }}</span>
           </button>
@@ -489,6 +524,20 @@
         "zh-TW": "選單"
       },
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": {
+        "en": "Search Bar"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": {
+        "en": "Show search button"
+      },
+      "default": true
     },
     {
       "type": "header",
